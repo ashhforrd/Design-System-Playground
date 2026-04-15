@@ -1,64 +1,142 @@
-import Image from "next/image";
+import {
+  Badge,
+  Button,
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+  Checkbox,
+  Input,
+  Label,
+  Link,
+  Separator,
+  Switch,
+  Textarea,
+} from "@/components/ui";
+import { ThemeModeToggle } from "@/components/playground/theme-mode-toggle";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div
+      className="flex min-h-screen items-center justify-center p-8"
+      style={{
+        background: "var(--background)",
+        color: "var(--foreground)",
+      }}
+    >
+      <main
+        className="w-full max-w-5xl border p-10"
+        style={{
+          background: "var(--ds-surface)",
+          borderColor: "var(--ds-color-neutral-border)",
+          borderRadius: "var(--ds-radius-md)",
+        }}
+      >
+        <div className="space-y-3">
+          <p
+            className="text-xs font-semibold uppercase tracking-[0.2em]"
+            style={{ color: "var(--ds-muted-fg)" }}
+          >
+            Design system
+          </p>
+          <h1 className="text-3xl font-semibold tracking-tight">
+            Component playground
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          <p className="max-w-2xl leading-relaxed" style={{ color: "var(--ds-muted-fg)" }}>
+            Explore primitives in isolation via Storybook (Design System group) or
+            here on the home screen. Theme defaults to dark; switch to light or soft
+            for alternate monochrome contexts.
+          </p>
+          <p className="text-sm" style={{ color: "var(--ds-muted-fg)" }}>
+            Open the interactive editor at{" "}
+            <Link href="/playground">/playground</Link>.
           </p>
         </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
+
+        <div className="mt-8 space-y-2">
+          <p className="text-sm font-medium" style={{ color: "var(--ds-muted-fg)" }}>
+            Theme
+          </p>
+          <ThemeModeToggle />
         </div>
+
+        <Separator className="my-8" />
+
+        <section className="grid gap-6 md:grid-cols-2">
+          <Card>
+            <CardHeader>
+              <CardTitle>Actions</CardTitle>
+              <CardDescription>Button variants and status badge.</CardDescription>
+            </CardHeader>
+            <CardContent className="flex flex-wrap items-center gap-3">
+              <Button variant="primary">Primary</Button>
+              <Button variant="secondary">Secondary</Button>
+              <Button variant="ghost">Ghost</Button>
+              <Badge variant="outline">New</Badge>
+              <Badge variant="muted">Beta</Badge>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Inputs</CardTitle>
+              <CardDescription>Field primitives for forms.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-3">
+              <div className="space-y-1">
+                <Label htmlFor="landing-email" optional="(optional)">
+                  Email
+                </Label>
+                <Input id="landing-email" type="email" placeholder="you@example.com" />
+              </div>
+              <div className="space-y-1">
+                <Label htmlFor="landing-notes">Notes</Label>
+                <Textarea id="landing-notes" placeholder="Write a short note..." />
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Selection</CardTitle>
+              <CardDescription>Binary controls and separators.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Checkbox label="Enable compact mode" defaultChecked />
+              <Switch label="Auto save drafts" defaultChecked />
+              <Separator />
+              <div className="flex items-center gap-3">
+                <span className="text-sm" style={{ color: "var(--ds-muted-fg)" }}>
+                  Left
+                </span>
+                <Separator orientation="vertical" />
+                <span className="text-sm" style={{ color: "var(--ds-muted-fg)" }}>
+                  Right
+                </span>
+              </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Navigation</CardTitle>
+              <CardDescription>Monochrome links and card actions.</CardDescription>
+            </CardHeader>
+            <CardContent className="space-y-2">
+              <Link href="/">Internal link example</Link>
+              <br />
+              <Link href="https://storybook.js.org">Storybook docs</Link>
+            </CardContent>
+            <CardFooter>
+              <Button size="sm">Confirm</Button>
+              <Button size="sm" variant="secondary">
+                Cancel
+              </Button>
+            </CardFooter>
+          </Card>
+        </section>
       </main>
     </div>
   );

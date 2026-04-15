@@ -1,0 +1,58 @@
+.track {
+  position: relative;
+  width: 2.75rem;
+  height: 1.5rem;
+  flex-shrink: 0;
+  border-radius: 9999px;
+  border: 1px solid var(--ds-color-neutral-border, #2e2e2e);
+  background: var(--ds-surface-hover, #1f1f1f);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.track[data-state="on"] {
+  background: var(--foreground, #fafafa);
+  border-color: var(--foreground, #fafafa);
+}
+
+.thumb {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: calc(1.5rem - 6px);
+  height: calc(1.5rem - 6px);
+  border-radius: 9999px;
+  background: var(--foreground, #fafafa);
+  transition: transform 0.15s ease, background 0.15s ease;
+}
+
+.track[data-state="on"] .thumb {
+  transform: translateX(1.25rem);
+  background: var(--background, #0a0a0a);
+}
+
+.track[data-state="off"] .thumb {
+  background: var(--ds-muted-fg, #a3a3a3);
+}
+
+.root:disabled .track {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.root {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0;
+  margin: 0;
+  border: none;
+  background: none;
+  cursor: pointer;
+  font: inherit;
+  color: var(--foreground, #fafafa);
+}
+
+.label {
+  font-size: 0.875rem;
+  user-select: none;
+}

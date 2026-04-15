@@ -1,0 +1,17 @@
+.root {
+  border: none;
+  margin: 0;
+  flex-shrink: 0;
+  background: var(--ds-color-neutral-border, #2e2e2e);
+}
+
+.horizontal {
+  width: 100%;
+  height: 1px;
+}
+
+.vertical {
+  align-self: stretch;
+  width: 1px;
+  min-height: 1.5rem;
+}
