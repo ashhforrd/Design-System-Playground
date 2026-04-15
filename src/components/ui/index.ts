@@ -21,6 +21,8 @@ export { Link } from "./link/link";
 export type { LinkProps } from "./link/link";
 export { Separator } from "./separator/separator";
 export type { SeparatorOrientation, SeparatorProps } from "./separator/separator";
+export { Select } from "./select/select";
+export type { SelectOption, SelectProps } from "./select/select";
 export { Switch } from "./switch/switch";
 export type { SwitchProps } from "./switch/switch";
 export { Textarea } from "./textarea/textarea";

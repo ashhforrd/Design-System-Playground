@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { createJSONStorage, persist } from "zustand/middleware";
 import type { ThemeMode } from "@/tokens/theme";
 
 export type PlaygroundComponent =
@@ -219,82 +220,90 @@ type PlaygroundState = {
   resetPlayground: () => void;
 };
 
-export const usePlaygroundStore = create<PlaygroundState>((set) => ({
-  themeMode: "dark",
-  selectedComponent: "button",
-  button: defaultButtonProps,
-  input: defaultInputProps,
-  badge: defaultBadgeProps,
-  switchControl: defaultSwitchProps,
-  checkbox: defaultCheckboxProps,
-  textarea: defaultTextareaProps,
-  label: defaultLabelProps,
-  separator: defaultSeparatorProps,
-  link: defaultLinkProps,
-  card: defaultCardProps,
-  presets: initialPresets,
-  setThemeMode: (mode) => set({ themeMode: mode }),
-  setSelectedComponent: (component) => set({ selectedComponent: component }),
-  updateButton: (patch) => set((state) => ({ button: { ...state.button, ...patch } })),
-  updateInput: (patch) => set((state) => ({ input: { ...state.input, ...patch } })),
-  updateBadge: (patch) => set((state) => ({ badge: { ...state.badge, ...patch } })),
-  updateSwitchControl: (patch) =>
-    set((state) => ({ switchControl: { ...state.switchControl, ...patch } })),
-  updateCheckbox: (patch) =>
-    set((state) => ({ checkbox: { ...state.checkbox, ...patch } })),
-  updateTextarea: (patch) =>
-    set((state) => ({ textarea: { ...state.textarea, ...patch } })),
-  updateLabel: (patch) => set((state) => ({ label: { ...state.label, ...patch } })),
-  updateSeparator: (patch) =>
-    set((state) => ({ separator: { ...state.separator, ...patch } })),
-  updateLink: (patch) => set((state) => ({ link: { ...state.link, ...patch } })),
-  updateCard: (patch) => set((state) => ({ card: { ...state.card, ...patch } })),
-  savePreset: (name) =>
-    set((state) => {
-      const nextName = name.trim();
-      if (!nextName) return state;
-      const id = `preset-${Date.now()}`;
-      const snapshot: PlaygroundSnapshot = {
-        selectedComponent: state.selectedComponent,
-        button: state.button,
-        input: state.input,
-        badge: state.badge,
-        switchControl: state.switchControl,
-        checkbox: state.checkbox,
-        textarea: state.textarea,
-        label: state.label,
-        separator: state.separator,
-        link: state.link,
-        card: state.card,
-      };
-      return {
-        presets: [{ id, name: nextName, snapshot }, ...state.presets],
-      };
+export const usePlaygroundStore = create<PlaygroundState>()(
+  persist(
+    (set) => ({
+      themeMode: "dark",
+      selectedComponent: "button",
+      button: defaultButtonProps,
+      input: defaultInputProps,
+      badge: defaultBadgeProps,
+      switchControl: defaultSwitchProps,
+      checkbox: defaultCheckboxProps,
+      textarea: defaultTextareaProps,
+      label: defaultLabelProps,
+      separator: defaultSeparatorProps,
+      link: defaultLinkProps,
+      card: defaultCardProps,
+      presets: initialPresets,
+      setThemeMode: (mode) => set({ themeMode: mode }),
+      setSelectedComponent: (component) => set({ selectedComponent: component }),
+      updateButton: (patch) => set((state) => ({ button: { ...state.button, ...patch } })),
+      updateInput: (patch) => set((state) => ({ input: { ...state.input, ...patch } })),
+      updateBadge: (patch) => set((state) => ({ badge: { ...state.badge, ...patch } })),
+      updateSwitchControl: (patch) =>
+        set((state) => ({ switchControl: { ...state.switchControl, ...patch } })),
+      updateCheckbox: (patch) =>
+        set((state) => ({ checkbox: { ...state.checkbox, ...patch } })),
+      updateTextarea: (patch) =>
+        set((state) => ({ textarea: { ...state.textarea, ...patch } })),
+      updateLabel: (patch) => set((state) => ({ label: { ...state.label, ...patch } })),
+      updateSeparator: (patch) =>
+        set((state) => ({ separator: { ...state.separator, ...patch } })),
+      updateLink: (patch) => set((state) => ({ link: { ...state.link, ...patch } })),
+      updateCard: (patch) => set((state) => ({ card: { ...state.card, ...patch } })),
+      savePreset: (name) =>
+        set((state) => {
+          const nextName = name.trim();
+          if (!nextName) return state;
+          const id = `preset-${Date.now()}`;
+          const snapshot: PlaygroundSnapshot = {
+            selectedComponent: state.selectedComponent,
+            button: state.button,
+            input: state.input,
+            badge: state.badge,
+            switchControl: state.switchControl,
+            checkbox: state.checkbox,
+            textarea: state.textarea,
+            label: state.label,
+            separator: state.separator,
+            link: state.link,
+            card: state.card,
+          };
+          return {
+            presets: [{ id, name: nextName, snapshot }, ...state.presets],
+          };
+        }),
+      loadPreset: (id) =>
+        set((state) => {
+          const preset = state.presets.find((item) => item.id === id);
+          if (!preset) return state;
+          return {
+            selectedComponent: preset.snapshot.selectedComponent,
+            button: preset.snapshot.button,
+            input: preset.snapshot.input,
+            badge: preset.snapshot.badge,
+            switchControl: preset.snapshot.switchControl,
+            checkbox: preset.snapshot.checkbox,
+            textarea: preset.snapshot.textarea,
+            label: preset.snapshot.label,
+            separator: preset.snapshot.separator,
+            link: preset.snapshot.link,
+            card: preset.snapshot.card,
+          };
+        }),
+      deletePreset: (id) =>
+        set((state) => ({
+          presets: state.presets.filter((item) => item.id !== id),
+        })),
+      resetPlayground: () =>
+        set({
+          ...createSnapshot(),
+        }),
     }),
-  loadPreset: (id) =>
-    set((state) => {
-      const preset = state.presets.find((item) => item.id === id);
-      if (!preset) return state;
-      return {
-        selectedComponent: preset.snapshot.selectedComponent,
-        button: preset.snapshot.button,
-        input: preset.snapshot.input,
-        badge: preset.snapshot.badge,
-        switchControl: preset.snapshot.switchControl,
-        checkbox: preset.snapshot.checkbox,
-        textarea: preset.snapshot.textarea,
-        label: preset.snapshot.label,
-        separator: preset.snapshot.separator,
-        link: preset.snapshot.link,
-        card: preset.snapshot.card,
-      };
-    }),
-  deletePreset: (id) =>
-    set((state) => ({
-      presets: state.presets.filter((item) => item.id !== id),
-    })),
-  resetPlayground: () =>
-    set({
-      ...createSnapshot(),
-    }),
-}));
+    {
+      name: "design-system-playground-store",
+      storage: createJSONStorage(() => localStorage),
+    },
+  ),
+);

@@ -15,6 +15,7 @@ import {
   Input,
   Label as UiLabel,
   Link,
+  Select,
   Separator,
   Switch,
   Textarea,
@@ -142,30 +143,24 @@ export default function PlaygroundPage() {
             <CardContent className="space-y-5">
               <div className="space-y-2">
                 <FieldLabel>Component</FieldLabel>
-                <select
-                  className="w-full border px-3 py-2 text-sm"
-                  style={{
-                    borderColor: "var(--ds-color-neutral-border)",
-                    borderRadius: "var(--ds-radius-md)",
-                    background: "var(--ds-input-bg)",
-                    color: "var(--foreground)",
-                  }}
+                <Select
                   value={selectedComponent}
-                  onChange={(event) =>
-                    setSelectedComponent(event.target.value as typeof selectedComponent)
+                  onValueChange={(next) =>
+                    setSelectedComponent(next as typeof selectedComponent)
                   }
-                >
-                  <option value="button">Button</option>
-                  <option value="input">Input</option>
-                  <option value="badge">Badge</option>
-                  <option value="switch">Switch</option>
-                  <option value="checkbox">Checkbox</option>
-                  <option value="textarea">Textarea</option>
-                  <option value="label">Label</option>
-                  <option value="separator">Separator</option>
-                  <option value="link">Link</option>
-                  <option value="card">Card</option>
-                </select>
+                  options={[
+                    { label: "Button", value: "button" },
+                    { label: "Input", value: "input" },
+                    { label: "Badge", value: "badge" },
+                    { label: "Switch", value: "switch" },
+                    { label: "Checkbox", value: "checkbox" },
+                    { label: "Textarea", value: "textarea" },
+                    { label: "Label", value: "label" },
+                    { label: "Separator", value: "separator" },
+                    { label: "Link", value: "link" },
+                    { label: "Card", value: "card" },
+                  ]}
+                />
               </div>
 
               <Separator />
@@ -225,43 +220,31 @@ export default function PlaygroundPage() {
                     onChange={(e) => updateButton({ label: e.target.value })}
                   />
                   <FieldLabel>Variant</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={button.variant}
-                    onChange={(e) =>
+                    onValueChange={(next) =>
                       updateButton({
-                        variant: e.target.value as "primary" | "secondary" | "ghost",
+                        variant: next as "primary" | "secondary" | "ghost",
                       })
                     }
-                  >
-                    <option value="primary">primary</option>
-                    <option value="secondary">secondary</option>
-                    <option value="ghost">ghost</option>
-                  </select>
+                    options={[
+                      { label: "primary", value: "primary" },
+                      { label: "secondary", value: "secondary" },
+                      { label: "ghost", value: "ghost" },
+                    ]}
+                  />
                   <FieldLabel>Size</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={button.size}
-                    onChange={(e) =>
-                      updateButton({ size: e.target.value as "sm" | "md" | "lg" })
+                    onValueChange={(next) =>
+                      updateButton({ size: next as "sm" | "md" | "lg" })
                     }
-                  >
-                    <option value="sm">sm</option>
-                    <option value="md">md</option>
-                    <option value="lg">lg</option>
-                  </select>
+                    options={[
+                      { label: "sm", value: "sm" },
+                      { label: "md", value: "md" },
+                      { label: "lg", value: "lg" },
+                    ]}
+                  />
                   <Switch
                     label="Disabled"
                     checked={button.disabled}
@@ -278,23 +261,17 @@ export default function PlaygroundPage() {
                     onChange={(e) => updateInput({ placeholder: e.target.value })}
                   />
                   <FieldLabel>Type</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={input.type}
-                    onChange={(e) =>
-                      updateInput({ type: e.target.value as "text" | "email" | "password" })
+                    onValueChange={(next) =>
+                      updateInput({ type: next as "text" | "email" | "password" })
                     }
-                  >
-                    <option value="text">text</option>
-                    <option value="email">email</option>
-                    <option value="password">password</option>
-                  </select>
+                    options={[
+                      { label: "text", value: "text" },
+                      { label: "email", value: "email" },
+                      { label: "password", value: "password" },
+                    ]}
+                  />
                   <Switch
                     label="Disabled"
                     checked={input.disabled}
@@ -311,40 +288,28 @@ export default function PlaygroundPage() {
                     onChange={(e) => updateBadge({ label: e.target.value })}
                   />
                   <FieldLabel>Variant</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={badge.variant}
-                    onChange={(e) =>
+                    onValueChange={(next) =>
                       updateBadge({
-                        variant: e.target.value as "solid" | "outline" | "muted",
+                        variant: next as "solid" | "outline" | "muted",
                       })
                     }
-                  >
-                    <option value="solid">solid</option>
-                    <option value="outline">outline</option>
-                    <option value="muted">muted</option>
-                  </select>
+                    options={[
+                      { label: "solid", value: "solid" },
+                      { label: "outline", value: "outline" },
+                      { label: "muted", value: "muted" },
+                    ]}
+                  />
                   <FieldLabel>Size</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={badge.size}
-                    onChange={(e) => updateBadge({ size: e.target.value as "sm" | "md" })}
-                  >
-                    <option value="sm">sm</option>
-                    <option value="md">md</option>
-                  </select>
+                    onValueChange={(next) => updateBadge({ size: next as "sm" | "md" })}
+                    options={[
+                      { label: "sm", value: "sm" },
+                      { label: "md", value: "md" },
+                    ]}
+                  />
                 </div>
               ) : null}
 
@@ -426,24 +391,18 @@ export default function PlaygroundPage() {
               {selectedComponent === "separator" ? (
                 <div className="space-y-3">
                   <FieldLabel>Orientation</FieldLabel>
-                  <select
-                    className="w-full border px-3 py-2 text-sm"
-                    style={{
-                      borderColor: "var(--ds-color-neutral-border)",
-                      borderRadius: "var(--ds-radius-md)",
-                      background: "var(--ds-input-bg)",
-                      color: "var(--foreground)",
-                    }}
+                  <Select
                     value={separator.orientation}
-                    onChange={(e) =>
+                    onValueChange={(next) =>
                       updateSeparator({
-                        orientation: e.target.value as "horizontal" | "vertical",
+                        orientation: next as "horizontal" | "vertical",
                       })
                     }
-                  >
-                    <option value="horizontal">horizontal</option>
-                    <option value="vertical">vertical</option>
-                  </select>
+                    options={[
+                      { label: "horizontal", value: "horizontal" },
+                      { label: "vertical", value: "vertical" },
+                    ]}
+                  />
                 </div>
               ) : null}
 
