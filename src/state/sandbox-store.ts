@@ -288,7 +288,11 @@ export const useSandboxStore = create<SandboxState>()(
         set((state) => ({
           nodes: state.nodes.map((node) =>
             node.id === id
-              ? { ...node, props: { ...node.props, ...props } }
+              ? {
+                  ...node,
+                  // Runtime: patch always matches `node.type`; TS cannot prove spread preserves the discriminant.
+                  props: { ...node.props, ...props } as ComponentProps[SandboxComponentType],
+                }
               : node
           ),
         }));
