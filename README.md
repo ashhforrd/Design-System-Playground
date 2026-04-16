@@ -1,14 +1,18 @@
 # Design System Playground
 
-A minimal, monochrome design system workspace built with **Next.js** and **Storybook**. Browse UI primitives in a dedicated explorer, or compose them on an interactive **sandbox canvas** with drag-and-drop and a live properties panel.
+![Preview of the playground app](public/Preview.png)
 
-## Quality Gate Status
+**Short description:** a small **Next.js** app to explore a monochrome component library, try variants in a **playground**, and compose screens on a **drag-and-drop sandbox** with live props—plus **Storybook** for isolated development and Chromatic-friendly visual checks.
 
-[![Chromatic](https://github.com/<your-username>/<your-repo>/actions/workflows/chromatic.yml/badge.svg)](https://github.com/<your-username>/<your-repo>/actions/workflows/chromatic.yml)
+It ships a **component explorer** (`/playground`), a **page-builder sandbox** (`/sandbox`) with persisted canvas state, and **dark / soft** theme presets. Docs generation and tests are available via npm scripts.
 
-This project uses a visual regression workflow with Chromatic. Every pull request can publish Storybook and run snapshot comparison checks.
+## Quality gate (Chromatic)
 
-## Core Features
+[![Chromatic](https://github.com/<your-username>/<your-repo>/actions/workflows/chromatic.yml/badge.svg)](https://github.com/<your-username>/<your-repo>)
+
+**Chromatic** hosts Storybook builds in the cloud and **compares UI screenshots** between the baseline and each branch or pull request. That gives you **visual regression testing**: unintended layout or styling changes show up as diffs in review instead of only being caught manually.
+
+## Core features
 
 ### App routes
 
@@ -23,13 +27,13 @@ This project uses a visual regression workflow with Chromatic. Every pull reques
 - **Theme presets** (CSS variables on the document root): **dark** (default) and **soft**—monochrome only.
 - **Storybook** for isolated development, docs, and visual tests.
 - **Zustand** for playground appearance (theme, font) and sandbox canvas state.
-- Optional **TypeScript prop docs** via `npm run docs:generate` (see script below).
+- Optional **TypeScript prop docs** via `npm run docs:generate`.
 
-## Getting Started
+## Getting started
 
 ```bash
 npm install
-npm run docs:generate   # optional: regenerate prop docs
+npm run docs:generate
 npm run dev
 ```
 
@@ -38,7 +42,7 @@ npm run dev
 
 You can use **Bun** instead of npm if you prefer (`bun install`, `bun run dev`, etc.).
 
-## Useful Scripts
+## Useful scripts
 
 - `npm run dev` — Start the Next.js app.
 - `npm run build` — Production build (includes TypeScript check).
@@ -48,10 +52,10 @@ You can use **Bun** instead of npm if you prefer (`bun install`, `bun run dev`, 
 - `npm run docs:generate` — Regenerate TypeScript-oriented component docs.
 - `npm run lint && npm test && npm run build` — Typical local quality pass.
 
-## Chromatic Setup
+## Chromatic setup
 
 1. Create a Chromatic project and obtain your project token.
 2. Add a repository secret named `CHROMATIC_PROJECT_TOKEN`.
 3. Push or open a pull request to trigger `.github/workflows/chromatic.yml`.
 
-After setup, replace `<your-username>/<your-repo>` in the badge URL at the top of this file with your real GitHub path.
+After setup, replace `<your-username>/<your-repo>` in the badge URL near the top of this file with your real GitHub path.

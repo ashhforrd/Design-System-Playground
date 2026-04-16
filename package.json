@@ -2,6 +2,7 @@
   "name": "design-system-playground",
   "version": "0.1.0",
   "private": true,
+  "description": "Next.js playground for a monochrome design system: component explorer, drag-and-drop sandbox canvas with persisted layout, and Storybook.",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
