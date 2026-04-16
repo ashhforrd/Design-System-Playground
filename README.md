@@ -14,7 +14,7 @@ This project uses a visual regression workflow with Chromatic. Every pull reques
 - TypeScript prop docs auto-generated from component source
 - Component version timeline per primitive
 - Storybook catalog for isolated component development
-- Monochrome theme presets: dark (default), light, soft
+- Monochrome theme presets: dark (default) and soft
 
 ## Getting Started
 

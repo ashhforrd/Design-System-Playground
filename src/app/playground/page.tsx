@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, Eye, Lock, Mail, Moon, Search, Sun } from "lucide-react";
+import { ChevronRight, Eye, LayoutGrid, Lock, Mail, Search } from "lucide-react";
+import NextLink from "next/link";
 
 import {
   Accordion,
@@ -105,15 +106,6 @@ export default function PlaygroundPage() {
   const [dialogOpen, setDialogOpen] = useState(false);
   const fontFamily = usePlaygroundStore((state) => state.fontFamily);
   const setFontFamily = usePlaygroundStore((state) => state.setFontFamily);
-  const themeMode = usePlaygroundStore((state) => state.themeMode);
-  const setThemeMode = usePlaygroundStore((state) => state.setThemeMode);
-
-  const appearanceMode: "dark" | "light" =
-    themeMode === "light" ? "light" : "dark";
-
-  const setAppearanceMode = (mode: "dark" | "light") => {
-    setThemeMode(mode);
-  };
 
   return (
     <div
@@ -157,30 +149,6 @@ export default function PlaygroundPage() {
 
                 {/* Controls */}
                 <div className="flex items-center gap-3">
-                  {/* Light / Dark appearance */}
-                  <div className="flex rounded-xl p-1.5" style={{ background: "#1C1C1C" }}>
-                    <button
-                      type="button"
-                      aria-label="Light mode"
-                      aria-pressed={appearanceMode === "light"}
-                      onClick={() => setAppearanceMode("light")}
-                      className="rounded-lg p-2 transition-colors"
-                      style={{ background: appearanceMode === "light" ? "#323232" : "transparent" }}
-                    >
-                      <Sun size={16} />
-                    </button>
-                    <button
-                      type="button"
-                      aria-label="Dark mode"
-                      aria-pressed={appearanceMode === "dark"}
-                      onClick={() => setAppearanceMode("dark")}
-                      className="rounded-lg p-2 transition-colors"
-                      style={{ background: appearanceMode === "dark" ? "#323232" : "transparent" }}
-                    >
-                      <Moon size={16} />
-                    </button>
-                  </div>
-
                   {/* Font Selector */}
                   <Select
                     value={fontFamily}
@@ -192,6 +160,18 @@ export default function PlaygroundPage() {
                     className="w-44 min-w-[11rem]"
                     placeholder="Font family"
                   />
+
+                  {/* Sandbox Link */}
+                  <Tooltip content="Open Page Builder Sandbox" position="bottom">
+                    <NextLink
+                      href="/sandbox"
+                      className="flex items-center gap-2 rounded-xl px-3 py-2 text-sm font-medium transition-colors hover:bg-white/10"
+                      style={{ background: "#1C1C1C" }}
+                    >
+                      <LayoutGrid size={16} />
+                      Sandbox
+                    </NextLink>
+                  </Tooltip>
                 </div>
               </div>
 

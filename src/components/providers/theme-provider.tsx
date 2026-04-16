@@ -3,9 +3,14 @@
 import { useEffect } from "react";
 
 import { usePlaygroundStore, fontFamilyValues, type FontFamily } from "@/state/playground-store";
-import { themePresets } from "@/tokens/theme";
+import { themePresets, type ThemeMode } from "@/tokens/theme";
 
-function applyTheme(mode: keyof typeof themePresets) {
+function resolveThemeMode(mode: string): ThemeMode {
+  if (mode === "dark" || mode === "soft") return mode;
+  return "dark";
+}
+
+function applyTheme(mode: ThemeMode) {
   const root = document.documentElement;
   const tokens = themePresets[mode];
 
@@ -38,7 +43,7 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const fontFamily = usePlaygroundStore((state) => state.fontFamily);
 
   useEffect(() => {
-    applyTheme(themeMode);
+    applyTheme(resolveThemeMode(themeMode));
   }, [themeMode]);
 
   useEffect(() => {

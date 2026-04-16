@@ -4,7 +4,7 @@ import { Button } from "@/components/ui";
 import { usePlaygroundStore } from "@/state/playground-store";
 import { themeModeLabels, type ThemeMode } from "@/tokens/theme";
 
-const modes: ThemeMode[] = ["dark", "light", "soft"];
+const modes: ThemeMode[] = ["dark", "soft"];
 
 export function ThemeModeToggle() {
   const themeMode = usePlaygroundStore((state) => state.themeMode);

@@ -257,7 +257,7 @@ export const usePlaygroundStore = create<PlaygroundState>()(
       link: defaultLinkProps,
       card: defaultCardProps,
       presets: initialPresets,
-      setThemeMode: (mode) => set({ themeMode: mode }),
+      setThemeMode: (mode) => set({ themeMode: mode === "soft" ? "soft" : "dark" }),
       setFontFamily: (font) => set({ fontFamily: font }),
       setSelectedComponent: (component) => set({ selectedComponent: component }),
       updateButton: (patch) => set((state) => ({ button: { ...state.button, ...patch } })),
@@ -326,6 +326,11 @@ export const usePlaygroundStore = create<PlaygroundState>()(
     {
       name: "design-system-playground-store",
       storage: createJSONStorage(() => localStorage),
+      onRehydrateStorage: () => (state) => {
+        if (state && state.themeMode !== "dark" && state.themeMode !== "soft") {
+          state.setThemeMode("dark");
+        }
+      },
     },
   ),
 );

@@ -52,7 +52,6 @@ const preview: Preview = {
         icon: "mirror",
         items: [
           { value: "dark", title: "Dark" },
-          { value: "light", title: "Light" },
           { value: "soft", title: "Soft" },
         ],
         dynamicTitle: true,

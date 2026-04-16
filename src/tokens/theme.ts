@@ -1,7 +1,6 @@
 /**
- * Minimal black & white design tokens. Three presets:
+ * Minimal black & white design tokens. Two presets:
  * - dark: default, near-black canvas
- * - light: white canvas
  * - soft: quiet gray (still monochrome)
  */
 export const themePresets = {
@@ -18,22 +17,6 @@ export const themePresets = {
     inputBg: "#0a0a0a",
     inputPlaceholder: "#737373",
     focusRing: "rgba(250, 250, 250, 0.22)",
-    radiusSm: "0.5rem",
-    radiusMd: "1rem",
-  },
-  light: {
-    background: "#ffffff",
-    foreground: "#0a0a0a",
-    surface: "#fafafa",
-    surfaceHover: "#f5f5f5",
-    mutedForeground: "#737373",
-    brand: "#0a0a0a",
-    brandHover: "#262626",
-    textOnBrand: "#fafafa",
-    neutralBorder: "#e5e5e5",
-    inputBg: "#ffffff",
-    inputPlaceholder: "#a3a3a3",
-    focusRing: "rgba(10, 10, 10, 0.12)",
     radiusSm: "0.5rem",
     radiusMd: "1rem",
   },
@@ -59,6 +42,5 @@ export type ThemeMode = keyof typeof themePresets;
 
 export const themeModeLabels: Record<ThemeMode, string> = {
   dark: "Dark",
-  light: "Light",
   soft: "Soft",
 };
