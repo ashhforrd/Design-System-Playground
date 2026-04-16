@@ -194,6 +194,175 @@ export const getDefaultSize = (type: SandboxComponentType) => {
   return { ...defaultComponentSizes[type] };
 };
 
+/** Starter layout so new users see what the sandbox can build (also used by “Load sample”). */
+export function createDemoCanvasNodes(): CanvasNode[] {
+  return [
+    {
+      id: "demo-heading",
+      type: "text",
+      x: 48,
+      y: 32,
+      width: 560,
+      height: 44,
+      props: {
+        content: "Sample page",
+        fontSize: "xl",
+        fontWeight: "bold",
+      },
+    },
+    {
+      id: "demo-subtitle",
+      type: "text",
+      x: 48,
+      y: 88,
+      width: 640,
+      height: 52,
+      props: {
+        content:
+          "Drag components from the left palette, arrange them on the canvas, and edit properties in the right panel—like the layout below.",
+        fontSize: "sm",
+        fontWeight: "normal",
+      },
+    },
+    {
+      id: "demo-badge",
+      type: "badge",
+      x: 48,
+      y: 160,
+      width: 80,
+      height: 28,
+      props: { label: "v2", variant: "outline", size: "sm" },
+    },
+    {
+      id: "demo-avatar",
+      type: "avatar",
+      x: 144,
+      y: 152,
+      width: 48,
+      height: 48,
+      props: { fallback: "DS", size: "md", src: "" },
+    },
+    {
+      id: "demo-spinner",
+      type: "spinner",
+      x: 208,
+      y: 160,
+      width: 32,
+      height: 32,
+      props: { size: "md" },
+    },
+    {
+      id: "demo-alert",
+      type: "alert",
+      x: 48,
+      y: 224,
+      width: 400,
+      height: 96,
+      props: {
+        title: "Tip",
+        message:
+          "Click a component to select it. Use the floating actions for layer order, duplicate, or delete.",
+        variant: "info",
+      },
+    },
+    {
+      id: "demo-separator",
+      type: "separator",
+      x: 48,
+      y: 336,
+      width: 656,
+      height: 2,
+      props: { orientation: "horizontal" },
+    },
+    {
+      id: "demo-card",
+      type: "card",
+      x: 48,
+      y: 368,
+      width: 336,
+      height: 200,
+      props: {
+        title: "Sandbox starter",
+        description: "Cards, forms, and status blocks can be arranged freely on the canvas.",
+        showFooter: true,
+        footerText: "Details",
+      },
+    },
+    {
+      id: "demo-label",
+      type: "label",
+      x: 416,
+      y: 368,
+      width: 240,
+      height: 28,
+      props: { text: "Work email", optional: "(required)" },
+    },
+    {
+      id: "demo-input",
+      type: "input",
+      x: 416,
+      y: 400,
+      width: 288,
+      height: 40,
+      props: { placeholder: "you@company.com", type: "email", disabled: false },
+    },
+    {
+      id: "demo-button",
+      type: "button",
+      x: 416,
+      y: 464,
+      width: 128,
+      height: 40,
+      props: { label: "Apply", variant: "primary", size: "md", disabled: false },
+    },
+    {
+      id: "demo-button-secondary",
+      type: "button",
+      x: 560,
+      y: 464,
+      width: 128,
+      height: 40,
+      props: { label: "Cancel", variant: "secondary", size: "md", disabled: false },
+    },
+    {
+      id: "demo-checkbox",
+      type: "checkbox",
+      x: 416,
+      y: 528,
+      width: 200,
+      height: 32,
+      props: { label: "Remember this device", checked: true, disabled: false },
+    },
+    {
+      id: "demo-switch",
+      type: "switch",
+      x: 416,
+      y: 576,
+      width: 240,
+      height: 36,
+      props: { label: "Email notifications", checked: false, disabled: false },
+    },
+    {
+      id: "demo-textarea",
+      type: "textarea",
+      x: 416,
+      y: 624,
+      width: 288,
+      height: 112,
+      props: { placeholder: "Optional notes…", disabled: false, rows: 4 },
+    },
+    {
+      id: "demo-progress",
+      type: "progress",
+      x: 48,
+      y: 592,
+      width: 320,
+      height: 28,
+      props: { value: 72, size: "md", showLabel: true },
+    },
+  ];
+}
+
 type SandboxState = {
   nodes: CanvasNode[];
   selectedNodeId: string | null;
@@ -210,6 +379,7 @@ type SandboxState = {
   selectNode: (id: string | null) => void;
   duplicateNode: (id: string) => void;
   clearCanvas: () => void;
+  loadDemoLayout: () => void;
   setCanvasZoom: (zoom: number) => void;
   setCanvasOffset: (offset: { x: number; y: number }) => void;
   setGridSnap: (snap: boolean) => void;
@@ -223,7 +393,7 @@ const generateId = () => `node-${Date.now()}-${Math.random().toString(36).slice(
 export const useSandboxStore = create<SandboxState>()(
   persist(
     (set, get) => ({
-      nodes: [],
+      nodes: createDemoCanvasNodes(),
       selectedNodeId: null,
       canvasZoom: 1,
       canvasOffset: { x: 0, y: 0 },
@@ -319,6 +489,10 @@ export const useSandboxStore = create<SandboxState>()(
         set({ nodes: [], selectedNodeId: null });
       },
 
+      loadDemoLayout: () => {
+        set({ nodes: createDemoCanvasNodes(), selectedNodeId: null });
+      },
+
       setCanvasZoom: (zoom) => {
         set({ canvasZoom: Math.max(0.25, Math.min(2, zoom)) });
       },
@@ -358,6 +532,23 @@ export const useSandboxStore = create<SandboxState>()(
     {
       name: "design-system-sandbox-store",
       storage: createJSONStorage(() => localStorage),
+      /**
+       * Default `nodes` is a demo layout. Rehydration used to replace it with `[]` from a prior
+       * “clear canvas”, making the canvas look full then empty after hydration—avoid that.
+       */
+      merge: (persistedState, currentState) => {
+        if (!persistedState || typeof persistedState !== "object") {
+          return currentState;
+        }
+        const p = persistedState as Partial<SandboxState>;
+        const hasPersistedNodes = Array.isArray(p.nodes) && p.nodes.length > 0;
+        const nodes = hasPersistedNodes ? p.nodes! : currentState.nodes;
+        return {
+          ...currentState,
+          ...p,
+          nodes,
+        };
+      },
     }
   )
 );

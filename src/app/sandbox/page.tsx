@@ -12,6 +12,7 @@ import {
   ArrowUpToLine,
   ArrowDownToLine,
   ChevronLeft,
+  LayoutTemplate,
   Move,
 } from "lucide-react";
 
@@ -144,7 +145,8 @@ function Toolbar({
   fontFamily: FontFamily;
   setFontFamily: (font: FontFamily) => void;
 }) {
-  const { canvasZoom, setCanvasZoom, gridSnap, setGridSnap, clearCanvas, nodes } = useSandboxStore();
+  const { canvasZoom, setCanvasZoom, gridSnap, setGridSnap, clearCanvas, loadDemoLayout, nodes } =
+    useSandboxStore();
 
   return (
     <div className="flex shrink-0 items-center justify-between border-b border-white/10 px-4 py-2">
@@ -206,6 +208,17 @@ function Toolbar({
             <Trash2 size={18} />
           </button>
         </Tooltip>
+
+        <Tooltip content="Load sample layout" position="bottom">
+          <button
+            type="button"
+            onClick={loadDemoLayout}
+            className="rounded-lg p-2 text-white/60 transition-colors hover:bg-white/10 hover:text-white"
+            aria-label="Load sample layout"
+          >
+            <LayoutTemplate size={18} />
+          </button>
+        </Tooltip>
       </div>
 
       <div className="flex items-center gap-4">
@@ -241,6 +254,7 @@ function Canvas() {
     selectNode,
     addNode,
     updateNodePosition,
+    loadDemoLayout,
     canvasZoom,
     canvasOffset,
     setCanvasOffset,
@@ -341,9 +355,16 @@ function Canvas() {
       data-canvas="true"
     >
       {nodes.length === 0 && (
-        <div className="pointer-events-none absolute inset-0 flex flex-col items-center justify-center gap-1 text-white/30">
-          <p className="text-lg">Drag components here to start building</p>
-          <p className="text-sm">Hold Alt + drag to pan the canvas</p>
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-4 px-6 text-center text-white/35">
+          <Move size={40} strokeWidth={1} className="shrink-0 opacity-60" />
+          <p className="text-lg">Canvas is empty</p>
+          <p className="max-w-sm text-sm leading-relaxed">
+            Drag components from the left palette, or load a sample to see a ready-made layout.
+          </p>
+          <Button type="button" variant="secondary" size="sm" onClick={() => loadDemoLayout()}>
+            Load sample layout
+          </Button>
+          <p className="text-xs text-white/25">Alt + drag to pan the canvas</p>
         </div>
       )}
 
