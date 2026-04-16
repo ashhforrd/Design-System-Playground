@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { ChevronRight, ChevronDown, Moon, Sun } from "lucide-react";
+import { ChevronRight, Eye, Lock, Mail, Moon, Search, Sun } from "lucide-react";
 
 import {
   Accordion,
@@ -123,7 +123,7 @@ export default function PlaygroundPage() {
       {/* Sidebar */}
       <aside className="flex w-[250px] shrink-0 flex-col overflow-hidden p-6">
         <h1 className="shrink-0 text-2xl font-black tracking-tight">PLAYGROUND</h1>
-        <nav className="scrollbar-custom mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
+        <nav className="scrollbar-hidden mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
           {components.map((name) => (
             <button
               key={name}
@@ -182,23 +182,16 @@ export default function PlaygroundPage() {
                   </div>
 
                   {/* Font Selector */}
-                  <div
-                    className="relative flex w-40 items-center justify-between rounded-xl"
-                    style={{ background: "#1C1C1C" }}
-                  >
-                    <select
-                      value={fontFamily}
-                      onChange={(e) => setFontFamily(e.target.value as FontFamily)}
-                      className="w-full cursor-pointer appearance-none rounded-xl bg-transparent px-3 py-2 pr-8 text-base outline-none"
-                    >
-                      {fonts.map((f) => (
-                        <option key={f} value={f} style={{ background: "#1C1C1C" }}>
-                          {fontFamilyLabels[f]}
-                        </option>
-                      ))}
-                    </select>
-                    <ChevronDown size={16} className="pointer-events-none absolute right-3" />
-                  </div>
+                  <Select
+                    value={fontFamily}
+                    onValueChange={(v) => setFontFamily(v as FontFamily)}
+                    options={fonts.map((f) => ({
+                      label: fontFamilyLabels[f],
+                      value: f,
+                    }))}
+                    className="w-44 min-w-[11rem]"
+                    placeholder="Font family"
+                  />
                 </div>
               </div>
 
@@ -464,6 +457,33 @@ function ComponentShowcase({
           {renderVariantCard("Default", <Input className="w-full max-w-md" placeholder="Enter text..." />)}
           {renderVariantCard("Email", <Input className="w-full max-w-md" type="email" placeholder="you@example.com" />)}
           {renderVariantCard("Password", <Input className="w-full max-w-md" type="password" placeholder="Password" />)}
+          {renderVariantCard(
+            "Icon start",
+            <Input
+              className="w-full max-w-md"
+              placeholder="Search…"
+              startIcon={<Search size={18} strokeWidth={2} />}
+            />,
+          )}
+          {renderVariantCard(
+            "Icon end",
+            <Input
+              className="w-full max-w-md"
+              type="email"
+              placeholder="you@company.com"
+              endIcon={<Mail size={18} strokeWidth={2} />}
+            />,
+          )}
+          {renderVariantCard(
+            "Icon start & end",
+            <Input
+              className="w-full max-w-md"
+              type="password"
+              placeholder="Password"
+              startIcon={<Lock size={18} strokeWidth={2} />}
+              endIcon={<Eye size={18} strokeWidth={2} />}
+            />,
+          )}
           {renderVariantCard("Disabled", <Input className="w-full max-w-md" placeholder="Disabled input" disabled />)}
         </div>
       );

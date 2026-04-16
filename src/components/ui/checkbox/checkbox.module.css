@@ -27,7 +27,7 @@
   height: 1rem;
   margin-top: 0.125rem;
   border: 1px solid var(--ds-color-neutral-border, #2e2e2e);
-  border-radius: calc(var(--ds-radius-sm, 0.25rem) * 0.75);
+  border-radius: calc(var(--ds-radius-sm, 0.5rem) * 0.75);
   background: var(--ds-input-bg, #0a0a0a);
   transition: background 0.15s ease, border-color 0.15s ease;
 }

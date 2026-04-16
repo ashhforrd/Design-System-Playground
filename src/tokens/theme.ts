@@ -18,8 +18,8 @@ export const themePresets = {
     inputBg: "#0a0a0a",
     inputPlaceholder: "#737373",
     focusRing: "rgba(250, 250, 250, 0.22)",
-    radiusSm: "0.25rem",
-    radiusMd: "0.375rem",
+    radiusSm: "0.5rem",
+    radiusMd: "1rem",
   },
   light: {
     background: "#ffffff",
@@ -34,8 +34,8 @@ export const themePresets = {
     inputBg: "#ffffff",
     inputPlaceholder: "#a3a3a3",
     focusRing: "rgba(10, 10, 10, 0.12)",
-    radiusSm: "0.25rem",
-    radiusMd: "0.375rem",
+    radiusSm: "0.5rem",
+    radiusMd: "1rem",
   },
   soft: {
     background: "#f4f4f5",
@@ -50,8 +50,8 @@ export const themePresets = {
     inputBg: "#ffffff",
     inputPlaceholder: "#a1a1aa",
     focusRing: "rgba(24, 24, 27, 0.14)",
-    radiusSm: "0.25rem",
-    radiusMd: "0.375rem",
+    radiusSm: "0.5rem",
+    radiusMd: "1rem",
   },
 } as const;
 

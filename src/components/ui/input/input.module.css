@@ -1,10 +1,10 @@
 .input {
   width: 100%;
-  min-height: 2.375rem;
+  min-height: 2.75rem;
   border: 1px solid var(--ds-color-neutral-border, #2e2e2e);
-  border-radius: var(--ds-radius-md, 0.375rem);
+  border-radius: var(--ds-radius-md, 1rem);
   background: var(--ds-input-bg, #0a0a0a);
-  padding: 0 0.75rem;
+  padding: 0.75rem 0.875rem;
   font-size: 0.875rem;
   color: var(--foreground, #fafafa);
   letter-spacing: -0.01em;
@@ -24,4 +24,61 @@
 .input:disabled {
   cursor: not-allowed;
   opacity: 0.5;
+}
+
+.wrapper {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  min-height: 2.75rem;
+  border: 1px solid var(--ds-color-neutral-border, #2e2e2e);
+  border-radius: var(--ds-radius-md, 1rem);
+  background: var(--ds-input-bg, #0a0a0a);
+  padding: 0 0.25rem;
+  transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.wrapper:focus-within {
+  border-color: var(--foreground, #fafafa);
+  box-shadow: 0 0 0 3px var(--ds-focus-ring, rgba(250, 250, 250, 0.22));
+}
+
+.wrapper:has(.inputAffixed:disabled) {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.iconSlot {
+  display: flex;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+  padding-left: 0.625rem;
+  color: var(--ds-muted-fg, #a3a3a3);
+}
+
+.iconSlotEnd {
+  padding-left: 0;
+  padding-right: 0.625rem;
+}
+
+.inputAffixed {
+  flex: 1 1 0%;
+  min-width: 0;
+  min-height: 2.75rem;
+  border: none;
+  background: transparent;
+  padding: 0.75rem 0.5rem;
+  font-size: 0.875rem;
+  color: var(--foreground, #fafafa);
+  letter-spacing: -0.01em;
+  outline: none;
+}
+
+.inputAffixed::placeholder {
+  color: var(--ds-input-placeholder, #737373);
+}
+
+.inputAffixed:disabled {
+  cursor: not-allowed;
 }
