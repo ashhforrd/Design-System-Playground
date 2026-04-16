@@ -1,0 +1,50 @@
+.accordion {
+  width: 100%;
+  border: 1px solid var(--ds-color-neutral-border);
+  border-radius: var(--ds-radius-md);
+  overflow: hidden;
+}
+
+.item {
+  border-bottom: 1px solid var(--ds-color-neutral-border);
+}
+
+.item:last-child {
+  border-bottom: none;
+}
+
+.trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  padding: 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--foreground);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  transition: background-color 0.15s ease;
+}
+
+.trigger:hover {
+  background-color: var(--ds-surface-hover);
+}
+
+.chevron {
+  color: var(--ds-muted-fg);
+  transition: transform 0.2s ease;
+  flex-shrink: 0;
+}
+
+.chevron.rotated {
+  transform: rotate(180deg);
+}
+
+.content {
+  padding: 0 1rem 1rem;
+  font-size: 0.875rem;
+  color: var(--ds-muted-fg);
+}

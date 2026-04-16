@@ -1,0 +1,77 @@
+.container {
+  position: fixed;
+  bottom: 1rem;
+  right: 1rem;
+  z-index: 100;
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 0.75rem;
+  min-width: 18rem;
+  max-width: 24rem;
+  padding: 1rem;
+  background-color: var(--ds-surface);
+  border: 1px solid var(--ds-color-neutral-border);
+  border-radius: var(--ds-radius-md);
+  box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+  animation: slideIn 0.2s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(100%);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.content {
+  flex: 1;
+}
+
+.title {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--foreground);
+}
+
+.description {
+  font-size: 0.8125rem;
+  color: var(--ds-muted-fg);
+  margin-top: 0.125rem;
+}
+
+.close {
+  flex-shrink: 0;
+  padding: 0.25rem;
+  color: var(--ds-muted-fg);
+  background: transparent;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  cursor: pointer;
+  transition: color 0.15s ease;
+}
+
+.close:hover {
+  color: var(--foreground);
+}
+
+.default {
+  border-left: 3px solid var(--foreground);
+}
+
+.success {
+  border-left: 3px solid #22c55e;
+}
+
+.error {
+  border-left: 3px solid #ef4444;
+}

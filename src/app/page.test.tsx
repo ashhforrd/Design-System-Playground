@@ -2,13 +2,10 @@ import { render, screen } from "@testing-library/react";
 import Home from "./page";
 
 describe("Home", () => {
-  it("renders the main heading", () => {
+  it("renders a single control to open the playground", () => {
     render(<Home />);
-    expect(
-      screen.getByRole("heading", { name: /component playground/i }),
-    ).toBeInTheDocument();
-    expect(
-      screen.getByRole("button", { name: /primary/i }),
-    ).toBeInTheDocument();
+    const button = screen.getByRole("button", { name: /open playground/i });
+    expect(button).toBeInTheDocument();
+    expect(button.closest("form")).toHaveAttribute("action", "/playground");
   });
 });

@@ -1,0 +1,44 @@
+.tabs {
+  width: 100%;
+}
+
+.list {
+  display: flex;
+  gap: 0.25rem;
+  padding: 0.25rem;
+  background-color: var(--ds-surface);
+  border: 1px solid var(--ds-color-neutral-border);
+  border-radius: var(--ds-radius-md);
+  width: fit-content;
+}
+
+.trigger {
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  color: var(--ds-muted-fg);
+  background-color: transparent;
+  border: none;
+  border-radius: var(--ds-radius-sm);
+  cursor: pointer;
+  transition: all 0.15s ease;
+}
+
+.trigger:hover:not(:disabled) {
+  color: var(--foreground);
+}
+
+.trigger:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.trigger.active {
+  color: var(--foreground);
+  background-color: var(--background);
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.content {
+  margin-top: 1rem;
+}

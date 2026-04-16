@@ -2,6 +2,24 @@ import { create } from "zustand";
 import { createJSONStorage, persist } from "zustand/middleware";
 import type { ThemeMode } from "@/tokens/theme";
 
+export type FontFamily = "satoshi" | "manrope" | "dm-sans" | "poppins" | "open-sans";
+
+export const fontFamilyLabels: Record<FontFamily, string> = {
+  satoshi: "Satoshi",
+  manrope: "Manrope",
+  "dm-sans": "DM Sans",
+  poppins: "Poppins",
+  "open-sans": "Open Sans",
+};
+
+export const fontFamilyValues: Record<FontFamily, string> = {
+  satoshi: '"Satoshi", system-ui, sans-serif',
+  manrope: '"Manrope", system-ui, sans-serif',
+  "dm-sans": '"DM Sans", system-ui, sans-serif',
+  poppins: '"Poppins", system-ui, sans-serif',
+  "open-sans": '"Open Sans", system-ui, sans-serif',
+};
+
 export type PlaygroundComponent =
   | "button"
   | "input"
@@ -190,6 +208,7 @@ const initialPresets: PlaygroundPreset[] = [
 
 type PlaygroundState = {
   themeMode: ThemeMode;
+  fontFamily: FontFamily;
   selectedComponent: PlaygroundComponent;
   button: ButtonPlaygroundProps;
   input: InputPlaygroundProps;
@@ -203,6 +222,7 @@ type PlaygroundState = {
   card: CardPlaygroundProps;
   presets: PlaygroundPreset[];
   setThemeMode: (mode: ThemeMode) => void;
+  setFontFamily: (font: FontFamily) => void;
   setSelectedComponent: (component: PlaygroundComponent) => void;
   updateButton: (patch: Partial<ButtonPlaygroundProps>) => void;
   updateInput: (patch: Partial<InputPlaygroundProps>) => void;
@@ -224,6 +244,7 @@ export const usePlaygroundStore = create<PlaygroundState>()(
   persist(
     (set) => ({
       themeMode: "dark",
+      fontFamily: "satoshi",
       selectedComponent: "button",
       button: defaultButtonProps,
       input: defaultInputProps,
@@ -237,6 +258,7 @@ export const usePlaygroundStore = create<PlaygroundState>()(
       card: defaultCardProps,
       presets: initialPresets,
       setThemeMode: (mode) => set({ themeMode: mode }),
+      setFontFamily: (font) => set({ fontFamily: font }),
       setSelectedComponent: (component) => set({ selectedComponent: component }),
       updateButton: (patch) => set((state) => ({ button: { ...state.button, ...patch } })),
       updateInput: (patch) => set((state) => ({ input: { ...state.input, ...patch } })),

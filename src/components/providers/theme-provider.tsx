@@ -2,7 +2,7 @@
 
 import { useEffect } from "react";
 
-import { usePlaygroundStore } from "@/state/playground-store";
+import { usePlaygroundStore, fontFamilyValues, type FontFamily } from "@/state/playground-store";
 import { themePresets } from "@/tokens/theme";
 
 function applyTheme(mode: keyof typeof themePresets) {
@@ -26,12 +26,24 @@ function applyTheme(mode: keyof typeof themePresets) {
   root.style.setProperty("--ds-radius-md", tokens.radiusMd);
 }
 
+function applyFont(font: FontFamily) {
+  const root = document.documentElement;
+  const fontValue = fontFamilyValues[font];
+  root.style.setProperty("--font-sans", fontValue);
+  document.body.style.fontFamily = fontValue;
+}
+
 export function ThemeProvider({ children }: { children: React.ReactNode }) {
   const themeMode = usePlaygroundStore((state) => state.themeMode);
+  const fontFamily = usePlaygroundStore((state) => state.fontFamily);
 
   useEffect(() => {
     applyTheme(themeMode);
   }, [themeMode]);
+
+  useEffect(() => {
+    applyFont(fontFamily);
+  }, [fontFamily]);
 
   return <>{children}</>;
 }
