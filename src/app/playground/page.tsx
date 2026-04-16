@@ -117,20 +117,22 @@ export default function PlaygroundPage() {
 
   return (
     <div
-      className="flex h-screen min-h-0 overflow-hidden"
+      className="flex h-screen min-h-0 w-full overflow-hidden"
       style={{ background: "#131313", color: "white" }}
     >
       {/* Sidebar */}
       <aside className="flex w-[250px] shrink-0 flex-col overflow-hidden p-6">
         <h1 className="shrink-0 text-2xl font-black tracking-tight">PLAYGROUND</h1>
-        <nav className="scrollbar-hidden mt-3 flex min-h-0 flex-1 flex-col gap-1.5 overflow-y-auto pr-1">
+        <nav className="scrollbar-custom mt-3 flex min-h-0 flex-1 flex-col overflow-y-auto pr-1">
           {components.map((name) => (
             <button
               key={name}
               onClick={() => setSelectedComponent(name)}
-              className="shrink-0 rounded-xl px-3 py-2.5 text-left text-base transition-colors"
+              className={`shrink-0 rounded-xl text-[14px] px-3 py-2.5 text-left text-base transition-colors cursor-pointer hover:bg-[#1C1C1C] ${
+                selectedComponent === name ? "font-semibold" : "font-normal"
+              }`}
               style={{
-                background: selectedComponent === name ? "#1C1C1C" : "transparent",
+                background: selectedComponent === name ? "#1C1C1C" : "",
               }}
             >
               {name}
@@ -140,84 +142,80 @@ export default function PlaygroundPage() {
       </aside>
 
       {/* Main Content */}
-      <main className="flex min-h-0 flex-1 flex-col overflow-hidden p-6">
-        <div
-          className="flex min-h-0 flex-1 flex-col gap-6 overflow-hidden rounded-3xl p-6"
-          style={{ background: "#161616" }}
-        >
-          {/* Header */}
-          <div className="flex shrink-0 flex-col gap-3">
-            <div className="flex items-center justify-between">
-              {/* Breadcrumb */}
-              <div className="flex items-center gap-2.5 text-base">
-                <span className="font-medium">Playground</span>
-                <ChevronRight size={16} />
-                <span>{selectedComponent}</span>
-              </div>
-
-              {/* Controls */}
-              <div className="flex items-center gap-3">
-                {/* Light / Dark appearance */}
-                <div className="flex rounded-xl p-1.5" style={{ background: "#1C1C1C" }}>
-                  <button
-                    type="button"
-                    aria-label="Light mode"
-                    aria-pressed={appearanceMode === "light"}
-                    onClick={() => setAppearanceMode("light")}
-                    className="rounded-lg p-2 transition-colors"
-                    style={{ background: appearanceMode === "light" ? "#323232" : "transparent" }}
-                  >
-                    <Sun size={16} />
-                  </button>
-                  <button
-                    type="button"
-                    aria-label="Dark mode"
-                    aria-pressed={appearanceMode === "dark"}
-                    onClick={() => setAppearanceMode("dark")}
-                    className="rounded-lg p-2 transition-colors"
-                    style={{ background: appearanceMode === "dark" ? "#323232" : "transparent" }}
-                  >
-                    <Moon size={16} />
-                  </button>
+      <main className="flex min-h-0 min-w-0 flex-1 flex-col overflow-hidden p-4">
+        <div className="flex min-h-0 flex-1 flex-col gap-6 overflow-hidden rounded-3xl p-4 items-center justify-start">
+          <div className="flex min-h-0 min-w-0 w-full max-w-2xl flex-1 flex-col gap-y-6 overflow-hidden">
+            {/* Header */}
+            <div className="flex shrink-0 flex-col gap-6">
+              <div className="flex items-center justify-between">
+                {/* Breadcrumb */}
+                <div className="flex items-center gap-2.5 text-base">
+                  <span className="font-medium">Playground</span>
+                  <ChevronRight size={16} />
+                  <span>{selectedComponent}</span>
                 </div>
 
-                {/* Font Selector */}
-                <div
-                  className="relative flex w-40 items-center justify-between rounded-xl"
-                  style={{ background: "#1C1C1C" }}
-                >
-                  <select
-                    value={fontFamily}
-                    onChange={(e) => setFontFamily(e.target.value as FontFamily)}
-                    className="w-full cursor-pointer appearance-none rounded-xl bg-transparent px-3 py-2 pr-8 text-base outline-none"
+                {/* Controls */}
+                <div className="flex items-center gap-3">
+                  {/* Light / Dark appearance */}
+                  <div className="flex rounded-xl p-1.5" style={{ background: "#1C1C1C" }}>
+                    <button
+                      type="button"
+                      aria-label="Light mode"
+                      aria-pressed={appearanceMode === "light"}
+                      onClick={() => setAppearanceMode("light")}
+                      className="rounded-lg p-2 transition-colors"
+                      style={{ background: appearanceMode === "light" ? "#323232" : "transparent" }}
+                    >
+                      <Sun size={16} />
+                    </button>
+                    <button
+                      type="button"
+                      aria-label="Dark mode"
+                      aria-pressed={appearanceMode === "dark"}
+                      onClick={() => setAppearanceMode("dark")}
+                      className="rounded-lg p-2 transition-colors"
+                      style={{ background: appearanceMode === "dark" ? "#323232" : "transparent" }}
+                    >
+                      <Moon size={16} />
+                    </button>
+                  </div>
+
+                  {/* Font Selector */}
+                  <div
+                    className="relative flex w-40 items-center justify-between rounded-xl"
+                    style={{ background: "#1C1C1C" }}
                   >
-                    {fonts.map((f) => (
-                      <option key={f} value={f} style={{ background: "#1C1C1C" }}>
-                        {fontFamilyLabels[f]}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown size={16} className="pointer-events-none absolute right-3" />
+                    <select
+                      value={fontFamily}
+                      onChange={(e) => setFontFamily(e.target.value as FontFamily)}
+                      className="w-full cursor-pointer appearance-none rounded-xl bg-transparent px-3 py-2 pr-8 text-base outline-none"
+                    >
+                      {fonts.map((f) => (
+                        <option key={f} value={f} style={{ background: "#1C1C1C" }}>
+                          {fontFamilyLabels[f]}
+                        </option>
+                      ))}
+                    </select>
+                    <ChevronDown size={16} className="pointer-events-none absolute right-3" />
+                  </div>
                 </div>
               </div>
+
+              {/* Description */}
+              <p className="text-lg leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
+                {componentDescriptions[selectedComponent]}
+              </p>
             </div>
 
-            {/* Description */}
-            <p className="text-xl leading-relaxed" style={{ color: "rgba(255,255,255,0.8)" }}>
-              {componentDescriptions[selectedComponent]}
-            </p>
-          </div>
-
-          {/* Component Showcase */}
-          <div
-            className="min-h-0 flex-1 overflow-y-auto overflow-x-hidden rounded-2xl p-8"
-            style={{ background: "#131313", border: "1px solid #212121" }}
-          >
-            <ComponentShowcase
-              component={selectedComponent}
-              dialogOpen={dialogOpen}
-              setDialogOpen={setDialogOpen}
-            />
+            {/* Component Showcase */}
+            <div className="scrollbar-custom min-h-0 w-full flex-1 overflow-y-auto overflow-x-hidden">
+              <ComponentShowcase
+                component={selectedComponent}
+                dialogOpen={dialogOpen}
+                setDialogOpen={setDialogOpen}
+              />
+            </div>
           </div>
         </div>
       </main>
@@ -234,15 +232,20 @@ function ComponentShowcase({
   dialogOpen: boolean;
   setDialogOpen: (open: boolean) => void;
 }) {
-  const gridClass = "grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3";
+  const showcaseStack = "flex w-full flex-col gap-6";
 
   const renderVariantCard = (title: string, children: React.ReactNode) => (
-    <div className="flex flex-col gap-3">
-      <span className="text-sm font-medium uppercase tracking-wider" style={{ color: "rgba(255,255,255,0.5)" }}>
+    <div className="flex w-full flex-col gap-4 py-4">
+      <span
+        className="self-start text-left text-xs font-medium uppercase tracking-wider"
+        style={{ color: "rgba(255,255,255,0.5)" }}
+      >
         {title}
       </span>
-      <div className="flex flex-wrap items-center gap-3">
-        {children}
+      <div className="flex w-full flex-col items-center gap-5 px-6 py-10 border rounded-[20px] border-white/6">
+        <div className="flex w-full flex-row flex-wrap items-center justify-center gap-3">
+          {children}
+        </div>
       </div>
     </div>
   );
@@ -250,9 +253,9 @@ function ComponentShowcase({
   switch (component) {
     case "Accordion":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Single Mode", (
-            <Accordion type="single" style={{ width: "100%", maxWidth: 400 }}>
+            <Accordion type="single" className="w-full max-w-lg">
               <AccordionItem value="1">
                 <AccordionTrigger value="1">What is a design system?</AccordionTrigger>
                 <AccordionContent value="1">A collection of reusable components and guidelines for building consistent UIs.</AccordionContent>
@@ -264,7 +267,7 @@ function ComponentShowcase({
             </Accordion>
           ))}
           {renderVariantCard("Multiple Mode", (
-            <Accordion type="multiple" defaultValue={["1"]} style={{ width: "100%", maxWidth: 400 }}>
+            <Accordion type="multiple" defaultValue={["1"]} className="w-full max-w-lg">
               <AccordionItem value="1">
                 <AccordionTrigger value="1">First Section (expanded)</AccordionTrigger>
                 <AccordionContent value="1">This section is expanded by default.</AccordionContent>
@@ -280,17 +283,37 @@ function ComponentShowcase({
 
     case "Alert":
       return (
-        <div className={gridClass}>
-          {renderVariantCard("Info", <Alert variant="info" title="Information">This is an informational message.</Alert>)}
-          {renderVariantCard("Success", <Alert variant="success" title="Success">Your changes have been saved.</Alert>)}
-          {renderVariantCard("Warning", <Alert variant="warning" title="Warning">Please review before proceeding.</Alert>)}
-          {renderVariantCard("Error", <Alert variant="error" title="Error">Something went wrong.</Alert>)}
+        <div className={showcaseStack}>
+          {renderVariantCard(
+            "Info",
+            <Alert className="w-full max-w-2xl" variant="info" title="Information">
+              This is an informational message.
+            </Alert>,
+          )}
+          {renderVariantCard(
+            "Success",
+            <Alert className="w-full max-w-2xl" variant="success" title="Success">
+              Your changes have been saved.
+            </Alert>,
+          )}
+          {renderVariantCard(
+            "Warning",
+            <Alert className="w-full max-w-2xl" variant="warning" title="Warning">
+              Please review before proceeding.
+            </Alert>,
+          )}
+          {renderVariantCard(
+            "Error",
+            <Alert className="w-full max-w-2xl" variant="error" title="Error">
+              Something went wrong.
+            </Alert>,
+          )}
         </div>
       );
 
     case "Avatar":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("With Initials", (
             <>
               <Avatar fallback="JD" size="sm" />
@@ -312,7 +335,7 @@ function ComponentShowcase({
 
     case "Badge":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Solid", (
             <>
               <Badge variant="solid" size="sm">Small</Badge>
@@ -336,7 +359,7 @@ function ComponentShowcase({
 
     case "Button":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Primary", (
             <>
               <Button variant="primary" size="sm">Small</Button>
@@ -370,9 +393,9 @@ function ComponentShowcase({
 
     case "Card":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Basic Card", (
-            <Card style={{ width: "100%", maxWidth: 320 }}>
+            <Card className="w-full max-w-sm">
               <CardHeader>
                 <CardTitle>Card Title</CardTitle>
                 <CardDescription>Card description goes here.</CardDescription>
@@ -384,7 +407,7 @@ function ComponentShowcase({
             </Card>
           ))}
           {renderVariantCard("Card with Actions", (
-            <Card style={{ width: "100%", maxWidth: 320 }}>
+            <Card className="w-full max-w-sm">
               <CardHeader>
                 <CardTitle>Project Update</CardTitle>
                 <CardDescription>Latest changes summary</CardDescription>
@@ -401,7 +424,7 @@ function ComponentShowcase({
 
     case "Checkbox":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Unchecked", <Checkbox label="Accept terms" />)}
           {renderVariantCard("Checked", <Checkbox label="Receive updates" defaultChecked />)}
           {renderVariantCard("Disabled", <Checkbox label="Disabled option" disabled />)}
@@ -411,7 +434,7 @@ function ComponentShowcase({
 
     case "Dialog":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Trigger Dialog", (
             <>
               <Button onClick={() => setDialogOpen(true)}>Open Dialog</Button>
@@ -437,27 +460,27 @@ function ComponentShowcase({
 
     case "Input":
       return (
-        <div className={gridClass}>
-          {renderVariantCard("Default", <Input placeholder="Enter text..." style={{ width: 280 }} />)}
-          {renderVariantCard("Email", <Input type="email" placeholder="you@example.com" style={{ width: 280 }} />)}
-          {renderVariantCard("Password", <Input type="password" placeholder="Password" style={{ width: 280 }} />)}
-          {renderVariantCard("Disabled", <Input placeholder="Disabled input" disabled style={{ width: 280 }} />)}
+        <div className={showcaseStack}>
+          {renderVariantCard("Default", <Input className="w-full max-w-md" placeholder="Enter text..." />)}
+          {renderVariantCard("Email", <Input className="w-full max-w-md" type="email" placeholder="you@example.com" />)}
+          {renderVariantCard("Password", <Input className="w-full max-w-md" type="password" placeholder="Password" />)}
+          {renderVariantCard("Disabled", <Input className="w-full max-w-md" placeholder="Disabled input" disabled />)}
         </div>
       );
 
     case "Label":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Basic Label", (
-            <div className="space-y-2">
+            <div className="flex w-full max-w-md flex-col gap-2">
               <Label htmlFor="label-demo">Email address</Label>
-              <Input id="label-demo" placeholder="you@example.com" />
+              <Input id="label-demo" className="w-full" placeholder="you@example.com" />
             </div>
           ))}
           {renderVariantCard("With Optional", (
-            <div className="space-y-2">
+            <div className="flex w-full max-w-md flex-col gap-2">
               <Label htmlFor="label-optional" optional="(optional)">Phone number</Label>
-              <Input id="label-optional" placeholder="+1 (555) 000-0000" />
+              <Input id="label-optional" className="w-full" placeholder="+1 (555) 000-0000" />
             </div>
           ))}
         </div>
@@ -465,7 +488,7 @@ function ComponentShowcase({
 
     case "Link":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Internal Link", <Link href="/">Go to Home</Link>)}
           {renderVariantCard("External Link", <Link href="https://github.com">GitHub (opens in new tab)</Link>)}
         </div>
@@ -473,17 +496,17 @@ function ComponentShowcase({
 
     case "Progress":
       return (
-        <div className={gridClass}>
-          {renderVariantCard("Small", <Progress value={30} size="sm" style={{ width: 280 }} />)}
-          {renderVariantCard("Medium", <Progress value={50} size="md" style={{ width: 280 }} />)}
-          {renderVariantCard("Large", <Progress value={70} size="lg" style={{ width: 280 }} />)}
-          {renderVariantCard("With Label", <Progress value={85} size="md" showLabel style={{ width: 280 }} />)}
+        <div className={showcaseStack}>
+          {renderVariantCard("Small", <Progress className="w-full max-w-md" value={30} size="sm" />)}
+          {renderVariantCard("Medium", <Progress className="w-full max-w-md" value={50} size="md" />)}
+          {renderVariantCard("Large", <Progress className="w-full max-w-md" value={70} size="lg" />)}
+          {renderVariantCard("With Label", <Progress className="w-full max-w-md" value={85} size="md" showLabel />)}
         </div>
       );
 
     case "Select":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Default", (
             <Select
               options={[
@@ -500,9 +523,9 @@ function ComponentShowcase({
 
     case "Separator":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Horizontal", (
-            <div style={{ width: 280 }}>
+            <div className="w-full max-w-md">
               <Separator orientation="horizontal" />
             </div>
           ))}
@@ -518,7 +541,7 @@ function ComponentShowcase({
 
     case "Skeleton":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Text", <Skeleton variant="text" width={200} />)}
           {renderVariantCard("Circular", <Skeleton variant="circular" width={48} height={48} />)}
           {renderVariantCard("Rectangular", <Skeleton variant="rectangular" width={200} height={100} />)}
@@ -537,7 +560,7 @@ function ComponentShowcase({
 
     case "Spinner":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Small", <Spinner size="sm" />)}
           {renderVariantCard("Medium", <Spinner size="md" />)}
           {renderVariantCard("Large", <Spinner size="lg" />)}
@@ -552,7 +575,7 @@ function ComponentShowcase({
 
     case "Switch":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Off", <Switch label="Enable feature" />)}
           {renderVariantCard("On", <Switch label="Notifications" defaultChecked />)}
           {renderVariantCard("Disabled Off", <Switch label="Disabled" disabled />)}
@@ -562,9 +585,9 @@ function ComponentShowcase({
 
     case "Tabs":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Default Tabs", (
-            <Tabs defaultValue="tab1" style={{ width: "100%", maxWidth: 400 }}>
+            <Tabs defaultValue="tab1" className="w-full max-w-lg">
               <TabsList>
                 <TabsTrigger value="tab1">Account</TabsTrigger>
                 <TabsTrigger value="tab2">Password</TabsTrigger>
@@ -582,7 +605,7 @@ function ComponentShowcase({
             </Tabs>
           ))}
           {renderVariantCard("With Disabled", (
-            <Tabs defaultValue="tab1">
+            <Tabs defaultValue="tab1" className="w-full max-w-lg">
               <TabsList>
                 <TabsTrigger value="tab1">Active</TabsTrigger>
                 <TabsTrigger value="tab2" disabled>Disabled</TabsTrigger>
@@ -595,16 +618,16 @@ function ComponentShowcase({
 
     case "Textarea":
       return (
-        <div className={gridClass}>
-          {renderVariantCard("Default", <Textarea placeholder="Write your message..." style={{ width: 280 }} />)}
-          {renderVariantCard("With Value", <Textarea defaultValue="This is some pre-filled content." style={{ width: 280 }} />)}
-          {renderVariantCard("Disabled", <Textarea placeholder="Disabled textarea" disabled style={{ width: 280 }} />)}
+        <div className={showcaseStack}>
+          {renderVariantCard("Default", <Textarea className="w-full max-w-md" placeholder="Write your message..." />)}
+          {renderVariantCard("With Value", <Textarea className="w-full max-w-md" defaultValue="This is some pre-filled content." />)}
+          {renderVariantCard("Disabled", <Textarea className="w-full max-w-md" placeholder="Disabled textarea" disabled />)}
         </div>
       );
 
     case "Toast":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Default", <Toast title="Notification" description="This is a toast message." duration={0} />)}
           {renderVariantCard("Success", <Toast variant="success" title="Success!" description="Changes saved." duration={0} />)}
           {renderVariantCard("Error", <Toast variant="error" title="Error" description="Something went wrong." duration={0} />)}
@@ -613,7 +636,7 @@ function ComponentShowcase({
 
     case "Tooltip":
       return (
-        <div className={gridClass}>
+        <div className={showcaseStack}>
           {renderVariantCard("Top", (
             <Tooltip content="Tooltip on top" position="top">
               <Button variant="secondary">Hover me (top)</Button>
